@@ -1,0 +1,54 @@
+loadConfiguration()
+
+def loadConfiguration() {
+    def environment = hasProperty('env') ? env : 'dev'
+    project.set('environment', environment)
+}
+
+buildscript {
+    repositories {
+        maven { url "http://maven.aliyun.com/nexus/content/groups/public" }
+    }
+    ext {
+        springBootVersion = '1.4.2.RELEASE'
+        myVersion ="3.0.1"
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'eclipse'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'maven'
+    version =  '1.0'
+    group = 'com.anwenchu.springDemo'
+
+    bootRepackage {
+        enabled = false
+    }
+    repositories {
+        maven { url "http://maven.aliyun.com/nexus/content/groups/public" }
+    }
+    dependencyManagement {
+        imports {
+            mavenBom 'org.springframework.cloud:spring-cloud-dependencies:Brixton.SR7'
+        }
+    }
+
+    //打包源代码
+    task sourcesJar(type: Jar) {
+        classifier = 'sources'
+        from sourceSets.main.allSource
+    }
+    artifacts {
+        archives jar
+        archives sourcesJar
+    }
+
+
+}
+
+description = 'springDemo'
