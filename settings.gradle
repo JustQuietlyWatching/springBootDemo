@@ -1,3 +1,5 @@
+rootProject.name = 'springboot-cloud'
+include 'eureka-server'
+include 'compute-service'
 include 'aop'
-include 'settingBean'
 

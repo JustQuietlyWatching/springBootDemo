@@ -1,0 +1,5 @@
+dependencies {
+    compile 'org.springframework.boot:spring-boot-starter-web'
+    compile 'org.springframework.cloud:spring-cloud-dependencies:Brixton.RELEASE'
+    compile 'org.springframework.cloud:spring-cloud-starter-eureka-server:1.3.5.RELEASE'
+}
