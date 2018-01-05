@@ -2,6 +2,7 @@ package space.anwenchu.service.web;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,7 @@ public class ComputeController {
     private final Logger logger = Logger.getLogger(getClass());
 
     @Autowired
+//    @Qualifier("discoveryClient")
     private DiscoveryClient client;
 
     @RequestMapping(value = "/add" ,method = RequestMethod.GET)
@@ -22,6 +24,7 @@ public class ComputeController {
         ServiceInstance instance = client.getLocalServiceInstance();
         Integer r = a + b;
         logger.info("/add, host:" + instance.getHost() + ", service_id:" + instance.getServiceId() + ", result:" + r);
+        logger.info("service:" + client.getServices());
         return r;
     }
 
