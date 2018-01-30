@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security/"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+    <title>12306</title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+</head>
+<body class="gray-bg">
+<div class="middle-box text-center loginscreen animated fadeInDown">
+    <div>
+
+        <p>anwenchu.</p>
+        <form id="loginForm" class="m-t" role="form" >
+            <div class="form-group">
+                <input type="text" name="username" class="form-control" placeholder="Username" required="">
+            </div>
+            <div class="form-group">
+                <input type="password" name="password" class="form-control" placeholder="Password" required="">
+            </div>
+            <img id="code" src="/getcode">
+            <p>
+                <button type="button" onclick="login('loginForm')" class="btn btn-primary block full-width m-b">Login</button>
+            </p>
+            <input type="text" id="inputCode" name="code"/>
+        </form>
+    </div>
+</div>
+<script th:src="@{js/jquery-3.2.1.min.js}" src="../static/js/jquery-3.2.1.min.js"></script>
+<script th:src="@{js/common.js}" src="../static/js/common.js"></script>
+</body>
+<script type="text/javascript">
+    $('#code').click(function(e){
+        //获取鼠标在图片上的坐标
+        console.log("X: ", e.offsetX, '\n Y: ',e.offsetY);
+//        $('#inputCode').val($('#inputCode').val() + "," + e.offsetX + "," + (e.offsetY - 30));
+//        console.log("inputCode", $('#inputCode').val());
+
+    });
+</script>
+</html>

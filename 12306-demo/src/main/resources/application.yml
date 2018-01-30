@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: 12306
+  thymeleaf:
+     cache: false
+  devtools:
+     livereload:
+       enabled: true
+server:
+  port: 8082
+
+
+
+
