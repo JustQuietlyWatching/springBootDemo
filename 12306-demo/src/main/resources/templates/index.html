@@ -12,18 +12,18 @@
     <div>
 
         <p>anwenchu.</p>
-        <form id="loginForm" class="m-t" role="form" >
+        <form id="loginForm" action="login2" method="post" class="m-t" role="form" >
             <div class="form-group">
                 <input type="text" name="username" class="form-control" placeholder="Username" required="">
             </div>
             <div class="form-group">
                 <input type="password" name="password" class="form-control" placeholder="Password" required="">
             </div>
-            <img id="code" src="/getcode">
+            <img id="code" src="/getcode" onclick="this.src='/getcode?'+(new Date().getTime())">
             <p>
-                <button type="button" onclick="login('loginForm')" class="btn btn-primary block full-width m-b">Login</button>
+                <button type="submit" class="btn btn-primary block full-width m-b">Login</button>
             </p>
-            <input type="text" id="inputCode" name="code"/>
+            <input type="text"  id="inputCode" name="code"/>
         </form>
     </div>
 </div>
@@ -31,12 +31,12 @@
 <script th:src="@{js/common.js}" src="../static/js/common.js"></script>
 </body>
 <script type="text/javascript">
-    $('#code').click(function(e){
-        //获取鼠标在图片上的坐标
-        console.log("X: ", e.offsetX, '\n Y: ',e.offsetY);
-//        $('#inputCode').val($('#inputCode').val() + "," + e.offsetX + "," + (e.offsetY - 30));
-//        console.log("inputCode", $('#inputCode').val());
-
-    });
+//    $('#code').click(function(e){
+//        //获取鼠标在图片上的坐标
+//        console.log("X: ", e.offsetX, '\n Y: ',e.offsetY);
+////        $('#inputCode').val($('#inputCode').val() + "," + e.offsetX + "," + (e.offsetY - 30));
+////        console.log("inputCode", $('#inputCode').val());
+//
+//    });
 </script>
 </html>

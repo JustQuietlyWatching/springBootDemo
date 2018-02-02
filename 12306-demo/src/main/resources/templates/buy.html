@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security/"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script th:src="@{js/jquery-3.2.1.min.js}" src="../static/js/jquery-3.2.1.min.js"></script>
+    <script th:src="@{js/common.js}" src="../static/js/common.js"></script>
+</head>
+<body>
+<div th:each="user : ${users}" >
+    <input name="users" type="checkbox" th:attr="value=${user}" th:text="${user}"/>
+</div>
+<button type="button" onclick="get('/buy')" >刷票</button>
+</body>
+</html>

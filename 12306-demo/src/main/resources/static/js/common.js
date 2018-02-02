@@ -120,6 +120,21 @@ function login(formId) {
     });
 }
 
+/**
+ *
+ * @param
+ */
+function get(url) {
+    $.ajax({
+        type : "GET",
+        url : url,
+        contentType: "application/json;charset=utf-8;",
+        success : function(data) {
+            console.log(data);
+        },
+    });
+}
+
 $(function() {
     // 如果不支持placeholder，用jQuery来完成
     if (!isSupportPlaceholder()) {
