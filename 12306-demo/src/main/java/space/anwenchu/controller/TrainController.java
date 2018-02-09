@@ -1,33 +1,34 @@
 package space.anwenchu.controller;
 
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
-import space.anwenchu.Bean.AutoBuyTicketModel;
+import space.anwenchu.bean.AutoBuyTicketModel;
+import space.anwenchu.bean.TrainBean;
 import space.anwenchu.formBean.LoginFormBean;
+import space.anwenchu.formBean.QueryTrainFormBean;
+import space.anwenchu.response.GenericResponse;
 import space.anwenchu.service.TrainService;
 import space.anwenchu.utils.Http;
+import space.anwenchu.utils.StationCodeUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
-import java.util.Random;
+import java.util.concurrent.Callable;
 
 /**
  * Created by tengj on 2017/3/13.
  */
-@Controller
+@RestController
 @Slf4j
 public class TrainController {
 
@@ -46,22 +47,19 @@ public class TrainController {
      * 登录
      */
     @PostMapping("/login")
-    public String login(HttpServletRequest request) throws IOException {
-        LoginFormBean loginFormBean = new LoginFormBean();
-        loginFormBean.setCode(request.getParameter("code"));
-        loginFormBean.setUsername(request.getParameter("username"));
-        loginFormBean.setPassword(request.getParameter("password"));
+    public String login(HttpServletRequest request, @RequestBody LoginFormBean loginFormBean) throws IOException {
+//        LoginFormBean loginFormBean = new LoginFormBean();
+//        loginFormBean.setCode(request.getParameter("code"));
+//        loginFormBean.setUsername(request.getParameter("username"));
+//        loginFormBean.setPassword(request.getParameter("password"));
         // 验证码
-        String checkCodeResult = trainService.checkCode(loginFormBean);
-        JSONObject msgJson = JSON.parseObject(checkCodeResult);
-        log.info(msgJson.getString("result_message"));
-        if (!"4".equals(msgJson.getString("result_code"))) {
-//            return msgJson.getString("result_message");
-            return "index";
+        if (trainService.checkImg(loginFormBean.getCode())) {
+            if (trainService.login(loginFormBean.getUserName(), loginFormBean.getPassword())) {
+                return "getusers";
+            }
         }
         // 登录
-        trainService.login(loginFormBean);
-        return "redirect:getusers";
+        return "index";
     }
 
 
@@ -73,11 +71,11 @@ public class TrainController {
         HttpSession session = request.getSession();
         LoginFormBean loginFormBean = new LoginFormBean();
         loginFormBean.setCode(request.getParameter("code"));
-        loginFormBean.setUsername(request.getParameter("username"));
+        loginFormBean.setUserName(request.getParameter("username"));
         loginFormBean.setPassword(request.getParameter("password"));
         if (trainService.checkImg(loginFormBean.getCode())) {
-            if (trainService.login(loginFormBean.getUsername(), loginFormBean.getPassword())) {
-                session.setAttribute("userName", loginFormBean.getUsername());
+            if (trainService.login(loginFormBean.getUserName(), loginFormBean.getPassword())) {
+                session.setAttribute("userName", loginFormBean.getUserName());
                 return "redirect:getusers";
             }
         }
@@ -145,8 +143,9 @@ public class TrainController {
     }
 
     @GetMapping("/query")
-    public void queryTrain() throws IOException {
-        trainService.queryTrain();
+    public Callable<GenericResponse<List<TrainBean>>> queryTrain(QueryTrainFormBean queryTrainFormBean) throws IOException {
+        return () -> GenericResponse.success( trainService.queryTrain(queryTrainFormBean));
+
     }
 
 }

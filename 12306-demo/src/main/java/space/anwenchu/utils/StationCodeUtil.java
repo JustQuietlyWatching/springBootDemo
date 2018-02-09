@@ -4,7 +4,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class StationCodeUtil {
@@ -35,7 +37,8 @@ public class StationCodeUtil {
 	}
 	
 	private static Map<String,StationCode> data = new HashMap<>();
-	
+	private static List<StationCode> dataList = new ArrayList<>();
+
 	static {
 		try {
 			FileInputStream fis=new FileInputStream(new File(StationCodeUtil.class.getResource("/StationCode.txt").toURI()));
@@ -49,6 +52,7 @@ public class StationCodeUtil {
 	            s.setCode(arrs[2]);
 	            s.setName(arrs[1]);
 	            s.setNamePre(arrs[0]);
+				dataList.add(s);
 	            data.put(arrs[1], s);
 	        }
 	        br.close();
@@ -61,5 +65,9 @@ public class StationCodeUtil {
 	
 	public static Map<String,StationCode> getData(){
 		return data;
+	}
+
+	public static List<StationCode> getDataList(){
+		return dataList;
 	}
 }

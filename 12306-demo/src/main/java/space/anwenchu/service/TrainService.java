@@ -8,16 +8,16 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-import space.anwenchu.Bean.AutoBuyTicketModel;
-import space.anwenchu.Bean.ConfirmOrderModel;
-import space.anwenchu.Bean.PreOrderModel;
-import space.anwenchu.Bean.TrainBean;
+import space.anwenchu.bean.AutoBuyTicketModel;
+import space.anwenchu.bean.ConfirmOrderModel;
+import space.anwenchu.bean.PreOrderModel;
+import space.anwenchu.bean.TrainBean;
 import space.anwenchu.formBean.LoginFormBean;
+import space.anwenchu.formBean.QueryTrainFormBean;
 import space.anwenchu.utils.Http;
 import space.anwenchu.utils.HttpKeepSessionUtil;
 import space.anwenchu.utils.StationCodeUtil;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
@@ -88,7 +88,7 @@ public class TrainService {
      * @return
      */
     public String login(LoginFormBean loginFormBean) throws IOException {
-        String result = Http.post("https://kyfw.12306.cn/passport/web/login", String.format("username=%s&password=%s&appid=otn", loginFormBean.getUsername(), loginFormBean.getPassword()));
+        String result = Http.post("https://kyfw.12306.cn/passport/web/login", String.format("username=%s&password=%s&appid=otn", loginFormBean.getUserName(), loginFormBean.getPassword()));
 
         JSONObject msgJson = JSON.parseObject(result);
         if (!"0".equals(msgJson.getString("result_code"))) {
@@ -133,45 +133,55 @@ public class TrainService {
         }
     }
 
-    public void queryTrain() throws IOException {
-        List<TrainBean> trainBeans = new ArrayList<>();
-        Map<String, String> config = new HashMap<>();
-        config.put("train_date", "2018-02-25");
-        config.put("from_station", "BJP");
-        config.put("to_station", "HDP");
-//        config.put("purpose_codes", "ADULT");
-        httpService.get(url1);
-        String result = Http.get(HOST + String.format("/otn/leftTicket/log?leftTicketDTO.train_date=%s&" +
-                        "leftTicketDTO.from_station=%s&leftTicketDTO.to_station=%s&" +
-                        "purpose_codes=ADULT", config.get("train_date"),
-                config.get("from_station"), config.get("to_station")));
-        JSONObject msgJson = JSON.parseObject(result);
-        if (!msgJson.getBoolean("status")){
-            System.exit(0);
-        }
-        result = Http.get(HOST + String.format("/otn/leftTicket/queryZ?leftTicketDTO.train_date=%s&" +
-                        "leftTicketDTO.from_station=%s&leftTicketDTO.to_station=%s&purpose_codes=ADULT", config.get("train_date"),
-                config.get("from_station"), config.get("to_station")));
-        msgJson = JSON.parseObject(result);
-        List<String> traninList = (msgJson.getJSONObject("data")).getJSONArray("result").toJavaList(String.class);
-        for (String itList : traninList) {
-            System.out.println("=================================");
-            String [] train = itList.split("\\|");
-            for (int i = 0; i < train.length; i++) {
-                System.out.println(i + ": = " + train[i]);
-            }
+    public List<TrainBean> queryTrain(QueryTrainFormBean queryTrainFormBean) throws IOException {
+        try {
 
-            if (train[3].contains("G") && !StringUtils.isEmpty(train[30]) && !"无".equals(train[30]) ) {
+            if(stationCodes.get(queryTrainFormBean.getFromCity()) == null) {
+                throw new RuntimeException("出发城市不存在");
+            }
+            if(stationCodes.get(queryTrainFormBean.getToCity()) == null) {
+                throw new RuntimeException("目标城市不存在");
+            }
+            httpService.get(url1);
+            String queryUrl = url2.replace("${trainDate}", queryTrainFormBean.getTrainDate())
+                    .replace("${from}", stationCodes.get(queryTrainFormBean.getFromCity()).getCode())
+                    .replace("${to}", stationCodes.get(queryTrainFormBean.getToCity()).getCode());
+            log.info("queryUrl: {}", queryUrl);
+            byte[] result = httpService.get(queryUrl);
+//            addCookieByQueryZ(preOrderModel, stationCodes);
+            String res = new String(result,"UTF-8");
+            log.info(res);
+            Map maps = (Map)JSON.parse(res);
+            List<String> trains = (List<String>)((Map)maps.get("data")).get("result");
+            List<TrainBean> trainBeanList = new ArrayList<>();
+            for(String train : trains) {
+                String[] data = train.split("\\|");
                 TrainBean trainBean = new TrainBean();
-                trainBean.setSecretStr(train[0]);
-                trainBean.setTrainNo(train[3]);
-                trainBean.setGaotie2(train[30]);
-                if (submit(config, trainBean)) {
-                    break;
-                }
-                trainBeans.add(trainBean);
-            }
+                trainBean.setSecretStr(data[0]);
+                trainBean.setTrainNo(data[3]);
+                trainBean.setStartStation(data[4]);
+                trainBean.setEndStation(data[5]);
+                trainBean.setStartTime(data[8]);
+                trainBean.setEndTime(data[9]);
+                trainBean.setLongDate(data[10]);
+                trainBean.setTrainDate(data[13]);
+                trainBean.setSoftSeat(data[32]);
+                trainBean.setOneSeat(data[31]);
+                trainBean.setTwoSeat(data[30]);
+                trainBean.setSpecialSleep(data[21]);
+                trainBean.setSoftSleep(data[23]);
+                trainBean.setMoveSleep(data[33]);
+                trainBean.setHardSleep(data[28]);
+                trainBean.setSoftSeat(data[24]);
+                trainBean.setHardSeat(data[29]);
+                trainBean.setNoSeat(data[26]);
 
+                trainBeanList.add(trainBean);
+            }
+            return trainBeanList;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
         }
 
     }
@@ -198,14 +208,6 @@ public class TrainService {
         return msgJson.getBoolean("status");
 
     }
-
-
-
-
-
-
-
-
 
 
 

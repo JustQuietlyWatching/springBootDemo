@@ -1,4 +1,4 @@
-package space.anwenchu.Bean;
+package space.anwenchu.bean;
 
 import lombok.Data;
 
