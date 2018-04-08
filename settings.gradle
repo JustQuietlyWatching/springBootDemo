@@ -4,4 +4,5 @@ include 'compute-service'
 include 'aop'
 include 'consul-consumer'
 include '12306-demo'
+include 'bean'
 
