@@ -47,5 +47,7 @@ public class TrainBean {
     String noSeat;
     // 其他
     String other;
+    // 是否可以购买 Y:可以  N:不可以
+    String isBuy;
 
 }

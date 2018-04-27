@@ -9,6 +9,11 @@ spring:
 server:
   port: 8082
 
+management:
+  security:
+    enabled: false
+  port: 1230
+
 
 
 

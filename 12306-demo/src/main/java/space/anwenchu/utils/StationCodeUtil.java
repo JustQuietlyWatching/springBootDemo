@@ -70,4 +70,14 @@ public class StationCodeUtil {
 	public static List<StationCode> getDataList(){
 		return dataList;
 	}
+
+	public static List<StationCode> getDataListByLikeName(String name){
+		List<StationCode> list = new ArrayList<>();
+		for (StationCode stationCode : dataList) {
+			if (stationCode.getName().contains(name)) {
+				list.add(stationCode);
+			}
+		}
+		return list;
+	}
 }

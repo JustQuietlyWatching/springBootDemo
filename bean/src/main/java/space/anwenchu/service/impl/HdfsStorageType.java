@@ -8,9 +8,8 @@ import space.anwenchu.service.UpStorageType;
  * Created by an_wch on 2018/4/4.
  */
 @Service("hdfsStorageType")
-public class HdfsStorageType extends UpStorageType {
+public class HdfsStorageType  {
 
-    @Override
     public void handleStorage() {
         System.out.println("-----hdfs---storageType-----");
     }

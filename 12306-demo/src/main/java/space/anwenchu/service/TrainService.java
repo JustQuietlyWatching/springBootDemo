@@ -153,14 +153,29 @@ public class TrainService {
             log.info(res);
             Map maps = (Map)JSON.parse(res);
             List<String> trains = (List<String>)((Map)maps.get("data")).get("result");
+
+            List<StationCodeUtil.StationCode> formStationCodeList = StationCodeUtil.getDataListByLikeName(queryTrainFormBean.getFromCity());
+            List<StationCodeUtil.StationCode> toStationCodeList = StationCodeUtil.getDataListByLikeName(queryTrainFormBean.getToCity());
+
             List<TrainBean> trainBeanList = new ArrayList<>();
             for(String train : trains) {
                 String[] data = train.split("\\|");
                 TrainBean trainBean = new TrainBean();
                 trainBean.setSecretStr(data[0]);
                 trainBean.setTrainNo(data[3]);
-                trainBean.setStartStation(data[4]);
-                trainBean.setEndStation(data[5]);
+
+                for (StationCodeUtil.StationCode it : formStationCodeList) {
+                    if (data[6].equals(it.getCode())) {
+                        trainBean.setStartStation(it.getName());
+                        break;
+                    }
+                }
+                for (StationCodeUtil.StationCode it : toStationCodeList) {
+                    if (data[7].equals(it.getCode())) {
+                        trainBean.setEndStation(it.getName());
+                        break;
+                    }
+                }
                 trainBean.setStartTime(data[8]);
                 trainBean.setEndTime(data[9]);
                 trainBean.setLongDate(data[10]);
@@ -175,7 +190,7 @@ public class TrainService {
                 trainBean.setSoftSeat(data[24]);
                 trainBean.setHardSeat(data[29]);
                 trainBean.setNoSeat(data[26]);
-
+                trainBean.setIsBuy(data[11]);
                 trainBeanList.add(trainBean);
             }
             return trainBeanList;

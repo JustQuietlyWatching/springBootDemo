@@ -10,7 +10,6 @@ import space.anwenchu.service.UpStorageType;
 @Service("ftpStorageType")
 public class FtpStorageType extends UpStorageType {
 
-    @Override
     public void handleStorage() {
 
         System.out.println("-----ftp---storageType-----");
