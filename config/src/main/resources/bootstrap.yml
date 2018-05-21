@@ -1,31 +1,112 @@
-#spring配置
 spring:
-  #应用配置
+  profiles:
+    active: dev
   application:
-    #应用名称(配置中心)
-    name: spring-cloud-config-server
-  #云服务配置
+    name: EnvService
   cloud:
     config:
       server:
-        #git中心配置（这里我将配置文件存储在码云上）
         git:
-          #配置文件所在的服务地址
-          uri:
-          #配置文件所在的文件路径
-          search-paths: service-registry-config
-          #公开的项目不需要设置用户名和密码
-          username:
-          password:
+#           uri: file:///D:/jk_workspace/jk-common-parent
+          uri: http://${project.git.url}/root/${project.git.envPath}
+#          default-label: 0820
+          username: an_wch
+          password: awc963.+-
+          #          配置文件所在的文件路径
+          search-paths: dev/*-conf,test/*-conf,prod/*-conf
+#          search-paths: env,TC-*
+          timeout: 60
+#          basedir: posp-core/src/main/env/test
 
-#服务器配置
+
+
+
+management:
+  context-path: /
+
+eureka:
+  instance:
+    preferIpAddress: true
+    leaseRenewalIntervalInSeconds: 10
+    statusPageUrlPath: /info
+    healthCheckUrlPath: /health
+
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    registry-fetch-interval-seconds: 30
+    healthcheck:
+      enabled: true
+    service-url:
+      defaultZone: http://${env.eureka.server[0]}/eureka/,http://${env.eureka.server[1]}/eureka/
+
+
+
 server:
-  #端口
-  port: 9010
+  port: 8888
+#logging:
+#  level:
+#    com.netflix.discovery: 'OFF'
+#    org.springframework.cloud: 'DEBUG'
 
-#服务器发现注册配置
+
+---
+env:
+   server:
+     - admin:test.123@172.16.136.203:8761
+     - admin:test.123@172.16.136.204:8761
+
+project:
+  git:
+    url: 192.168.120.68
+    envPath: trading-env.git
+
+---
+
+env:
+  server: 192.168.15.122
+  hostname: 10.54.1.158
+  eureka:
+    server:
+      - 10.80.1.84:8010
+      - 10.80.1.85:8011
+
+
+spring:
+  profiles: uat
+  rabbitmq:
+      host: 172.12.12.111
+      port: 5672
+      username: sppay
+      password: sppay
 eureka:
   client:
-    serviceUrl:
-      #配置服务中心(可配置多个,用逗号隔开)
-      defaultZone: http://admin:test.123@172.16.136.203:8761
+    service-url:
+      defaultZone: http://172.12.12.103:8080/eureka/
+
+
+
+---
+#生产环境1
+env:
+  server: 172.18.60.104
+  hostname: 172.18.60.104
+  eureka:
+    server:
+      - 172.18.60.103:8080
+      - 172.18.60.203:8080
+
+
+spring:
+  profiles: prod
+  rabbitmq:
+#      host: 172.18.60.212
+#      port: 5672
+      addresses: 172.18.60.112:5672,172.18.60.112:5673
+      username: sppay
+      password: sppay
+
+project:
+  git:
+    url:  124.232.152.234:8887
+    envPath: env.git

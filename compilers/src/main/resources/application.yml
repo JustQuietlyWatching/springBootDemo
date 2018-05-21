@@ -1,0 +1,100 @@
+anwenchu: anwenchu22
+bjums:
+  channelName: 北京银联
+  channel:
+    url: http://172.16.136.77:8080/ochannel/trade
+    key:
+    entityList:
+      - entity:
+        type: quickPay
+        notify: /notify
+        req:
+          sign:
+          fields:
+            - field:
+              fieldName: accNo
+              fields:
+              value: req.getAccNo()
+            - field:
+              fieldName: accNo
+              value: req.getAccNo()
+            - field:
+              fieldName: accNo
+              value: ${bjums.channel.entityList.req.fields.value}
+            - field:
+              fieldName: settleNo
+              value: ${bjums.channel.entityList.req.fields.value}
+            - field:
+              fieldName: accNo
+              value: req.getAccNo()
+            - field:
+              fieldName: accNo
+              value: req.getAccNo()
+            - field:
+              fieldName: accNo
+              value: req.getAccNo()
+            - field:
+              fieldName: accNo
+              value: req.getAccNo()
+            - field:
+              fieldName: accNo
+              value: req.getAccNo()
+            - field:
+              fieldName: accNo
+              value: req.getAccNo()
+            - field:
+              fieldName: accNo
+              value: req.getAccNo()
+            - field:
+              fieldName: accNo
+              value: req.getAccNo()
+        res:
+          sign:
+          fields:
+            - field:
+              fieldName: accNo
+              setValue: req.set(haha)
+            - field:
+              fieldName: accNo
+              setValue: req.set(haha)
+            - field:
+              fieldName: accNo
+              setValue: req.set(haha)
+            - field:
+              fieldName: accNo
+              setValue: req.set(haha)
+            - field:
+              fieldName: accNo
+              setValue: req.set(haha)
+            - field:
+              fieldName: accNo
+              setValue: req.set(haha)
+            - field:
+              fieldName: accNo
+              setValue: req.set(haha)
+            - field:
+              fieldName: accNo
+              setValue: req.set(haha)
+            - field:
+              fieldName: accNo
+              setValue: req.set(haha)
+            - field:
+              fieldName: accNo
+              setValue: req.set(haha)
+            - field:
+              fieldName: accNo
+              setValue: req.set(haha)
+            - field:
+              fieldName: accNo
+              setValue: req.set(haha)
+        connectionConfig:
+          body: toJson()
+          headers:
+            - {headerName: token, value: tokenValue}
+            - {headerName: cookie, value: cookieValue}
+          contentType: application/json
+          requestMethod: POST
+          outTime: 10
+          path: /consume
+
+
