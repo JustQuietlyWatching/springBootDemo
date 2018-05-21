@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: xxxx
+server:
+  port: 1112
+

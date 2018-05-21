@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: java-lock
+server:
+  port: 8080
+
