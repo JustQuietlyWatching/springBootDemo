@@ -12,6 +12,7 @@ const { Header, Content, Footer } = Layout;
 
 const FormItem = Form.Item;
 const Option = Select.Option;
+const CheckboxGroup = Checkbox.Group;
 
 @Form.create()
 export default class TestPlaneManage extends React.Component {
@@ -176,6 +177,21 @@ export default class TestPlaneManage extends React.Component {
             md: 8,
             lg: 6,
         };
+        const formItemLayout1 = {
+            labelCol: {
+                xs: {span: 24},
+                sm: {span: 3},
+            },
+            wrapperCol: {
+                xs: {span: 24},
+                sm: {span: 21},
+            },
+        };
+        const queryItemLayout1 = {
+            xs: 24,
+            md: 8,
+            lg: 16,
+        };
         const stationList = this.state.stations.map(d => <Option key={d.name}>{d.name}</Option>);
         return(
             <Content>
@@ -258,6 +274,27 @@ export default class TestPlaneManage extends React.Component {
                                     {...formItemLayout}
                                 >
                                     <Button type="primary" htmlType="submit"  style={{marginRight: '16px'}}>查询</Button>
+                                </FormItem>
+                            </Col>
+                            <Col {...queryItemLayout1}>
+                                <FormItem
+                                    {...formItemLayout1}
+                                    label="车次类型">
+                                    {getFieldDecorator('trainType')(
+                                        <div>
+                                            <Row>
+                                                <Col span={3}><Checkbox>全选</Checkbox></Col>
+                                                    <CheckboxGroup style={{ height: '100%' }}>
+                                                    <Col span={3}><Checkbox value="GC">GC-高铁</Checkbox></Col>
+                                                    <Col span={3}><Checkbox value="D">D-动车</Checkbox></Col>
+                                                    <Col span={3}><Checkbox value="Z">Z-直达</Checkbox></Col>
+                                                    <Col span={3}><Checkbox value="T">T-特快</Checkbox></Col>
+                                                    <Col span={3}><Checkbox value="K">K-快速</Checkbox></Col>
+                                                    <Col span={3}><Checkbox value="O">其他</Checkbox></Col>
+                                                </CheckboxGroup>
+                                            </Row>
+                                        </div>
+                                    )}
                                 </FormItem>
                             </Col>
                         </Row>

@@ -5,7 +5,7 @@ buildscript {
         maven { url "http://maven.aliyun.com/nexus/content/groups/public" }
     }
     ext {
-        springBootVersion = '1.4.2.RELEASE'
+        springBootVersion = '1.5.8.RELEASE'
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
@@ -16,22 +16,23 @@ subprojects {
     apply plugin: 'java'
     apply plugin: 'org.springframework.boot'
     apply plugin: 'maven'
+//    apply plugin: 'groovy'
 
     version =  '1.0'
-    group = 'space.anwenchu.springboot-cloud'
+    group = 'channel.anwenchu.springboot-cloud'
 
     bootRepackage {
         enabled = false
     }
 
     repositories {
-//        maven { url "http://172.16.60.188:8081/nexus/content/groups/public" }
+        maven { url "http://172.16.60.188:8081/nexus/content/groups/public" }
         maven { url "http://maven.aliyun.com/nexus/content/groups/public" }
     }
     dependencyManagement {
-        imports {
-            mavenBom 'org.springframework.cloud:spring-cloud-dependencies:Brixton.SR7'
-        }
+//        imports {
+//            mavenBom 'org.springframework.cloud:spring-cloud-dependencies:Brixton.SR7'
+//        }
     }
 
 
