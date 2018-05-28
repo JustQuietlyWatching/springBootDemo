@@ -24,6 +24,7 @@ public class Consumer implements Runnable {
                 // 在给定的时间里，从队列中获取值，如果没有取到会抛出异常。
 //                String data = queue.poll(2, TimeUnit.SECONDS);
 
+                System.out.println("queue.remainingCapacity() = " + queue.remainingCapacity());
                 // 从队列中获取值，如果队列中没有值，线程会一直阻塞，直到队列中有值，并且该方法取得了该值。
                 String data = queue.take();
                 if (null != data) {

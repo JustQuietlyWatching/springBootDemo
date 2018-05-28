@@ -28,11 +28,11 @@ public class Producer implements Runnable{
         try {
             while (isRunning) {
                 System.out.println("============正在生产数据...============");
+                System.out.println("queue.remainingCapacity() = " + queue.remainingCapacity());
+
                 Thread.sleep(r.nextInt(DEFAULT_RANGE_FOR_SLEEP));
 
                 data = "data:" + count.incrementAndGet();
-                System.out.println("将数据：" + data + "放入队列...");
-
                 // 将给定元素在给定的时间内设置到队列中，如果设置成功返回true, 否则返回false.
 //                if (!queue.offer(data, 2, TimeUnit.SECONDS)) {
 //                    System.out.println("放入数据失败：" + data);
@@ -40,6 +40,8 @@ public class Producer implements Runnable{
 
                 // 将元素设置到队列中，如果队列中没有多余的空间，该方法会一直阻塞，直到队列中有多余的空间。
                 queue.put(data);
+                System.out.println("将数据：" + data + "放入队列...");
+
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
