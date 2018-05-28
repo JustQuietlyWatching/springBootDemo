@@ -11,4 +11,5 @@ include 'config'
 include 'config-client'
 include 'java-lock'
 include 'init'
+include 'blocking-queue'
 
