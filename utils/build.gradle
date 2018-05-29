@@ -1,0 +1,6 @@
+dependencies {
+    compile 'org.springframework.boot:spring-boot-starter-web'
+    compile "org.projectlombok:lombok"
+    compile 'org.apache.commons:commons-lang3:3.7'
+
+}

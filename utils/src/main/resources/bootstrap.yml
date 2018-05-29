@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: utils
+server:
+  port: 1234
+
