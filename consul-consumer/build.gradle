@@ -1,6 +1,6 @@
 dependencies {
     compile 'org.springframework.boot:spring-boot-starter-web'
     compile 'org.springframework.boot:spring-boot-starter-actuator'
-    compile 'org.springframework.cloud:spring-cloud-starter-consul-discovery'
-    compile 'org.springframework.cloud:spring-cloud-dependencies:Dalston.SR1'
+    compile 'org.springframework.cloud:spring-cloud-starter-consul-discovery:1.3.3.RELEASE'
+    compile 'org.springframework.cloud:spring-cloud-dependencies:Edgware.SR3'
 }

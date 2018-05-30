@@ -7,8 +7,7 @@ dependencies {
 
     }
 //    compile 'org.springframework.boot:spring-boot-starter-jdbc'
-    compile("oracle:ojdbc:6")
+    compile 'com.oracle:ojdbc14:10.2.0.4.0'
     compile("com.zaxxer:HikariCP:2.6.0")
 
-//    compile 'com.oracle:ojdbc6:11.2.0.3'
 }

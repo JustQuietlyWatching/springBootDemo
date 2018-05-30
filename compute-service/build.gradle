@@ -1,5 +1,5 @@
 dependencies {
     compile 'org.springframework.boot:spring-boot-starter-web'
-    compile 'org.springframework.cloud:spring-cloud-starter-eureka'
+    compile 'org.springframework.cloud:spring-cloud-starter-eureka:1.4.4.RELEASE'
     compile 'org.springframework.cloud:spring-cloud-dependencies:Dalston.SR1'
 }

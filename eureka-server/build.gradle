@@ -1,5 +1,5 @@
 dependencies {
     compile 'org.springframework.boot:spring-boot-starter-web'
-    compile 'org.springframework.cloud:spring-cloud-dependencies:Brixton.RELEASE'
-    compile 'org.springframework.cloud:spring-cloud-starter-eureka-server'
+    compile 'org.springframework.cloud:spring-cloud-dependencies:Edgware.SR3'
+    compile 'org.springframework.cloud:spring-cloud-starter-eureka-server:1.4.4.RELEASE'
 }
