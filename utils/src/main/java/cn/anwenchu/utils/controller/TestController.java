@@ -3,10 +3,14 @@ package cn.anwenchu.utils.controller;
 import cn.anwenchu.utils.formBean.OlFormBean;
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import java.lang.reflect.Field;
+import java.util.Map;
 
 /**
  * Created by an_wch on 2018/5/29.
@@ -14,6 +18,7 @@ import java.lang.reflect.Field;
 @RestController
 @RequestMapping("/")
 public class TestController {
+
 
 
     @GetMapping
@@ -38,5 +43,12 @@ public class TestController {
                 "</body>" +
                 "</html>");
         return sb.toString();
+    }
+
+    @PostMapping
+    public Object mapToHtmlString(@RequestBody Map<String, Object> map) throws IllegalAccessException {
+        RestTemplate restTemplate = new RestTemplate();
+
+        return restTemplate.postForLocation("https://pay.abchina.com/ebus/trustpay/ReceiveMerchantIERequestServlet", map);
     }
 }

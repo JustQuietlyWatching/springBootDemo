@@ -7,7 +7,12 @@ dependencies {
 
     }
 //    compile 'org.springframework.boot:spring-boot-starter-jdbc'
-    compile 'com.oracle:ojdbc14:10.2.0.4.0'
-    compile("com.zaxxer:HikariCP:2.6.0")
+//    compile("com.zaxxer:HikariCP:2.6.0")
+    compile("oracle:ojdbc:6")
+    compile ('cn.vbill.middleware.sharding:sharding-jdbc-starter:0.2-SNAPSHOT'){
+        exclude group: 'com.alibaba:druid-spring-boot-starter'
+    }
+    compile 'com.alibaba:druid-spring-boot-starter:1.1.6'
+
 
 }

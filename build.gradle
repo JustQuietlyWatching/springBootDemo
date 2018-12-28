@@ -1,7 +1,8 @@
 
 buildscript {
     repositories {
-        maven { url "http://maven.aliyun.com/nexus/content/groups/public" }
+        maven { url "http://172.16.60.188:8081/nexus/content/groups/public" }
+//        maven { url "http://maven.aliyun.com/nexus/content/groups/public" }
     }
     ext {
         springBootVersion = '1.5.8.RELEASE'
@@ -25,7 +26,8 @@ subprojects {
     }
 
     repositories {
-        maven { url "http://maven.aliyun.com/nexus/content/groups/public" }
+        maven { url "http://172.16.60.188:8081/nexus/content/groups/public" }
+//        maven { url "http://maven.aliyun.com/nexus/content/groups/public" }
     }
     dependencyManagement {
 //        imports {

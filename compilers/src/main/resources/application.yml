@@ -96,5 +96,7 @@ bjums:
           requestMethod: POST
           outTime: 10
           path: /consume
+server:
+  port: 1234
 
 

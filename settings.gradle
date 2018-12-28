@@ -13,4 +13,5 @@ include 'java-lock'
 include 'init'
 include 'blocking-queue'
 include 'utils'
+include 'test'
 

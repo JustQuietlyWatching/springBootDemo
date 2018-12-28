@@ -12,13 +12,13 @@ import java.util.concurrent.locks.ReentrantLock;
 @Data
 public class ReentrantLockTest extends Thread {
 
-    private String name;
+    private String name2;
 
     public static ReentrantLock lock = new ReentrantLock();
     public static int i = 0;
 
     public ReentrantLockTest(String name) {
-        this.name = name;
+        this.name2 = name;
     }
 
     @Override

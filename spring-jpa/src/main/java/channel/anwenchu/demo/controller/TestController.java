@@ -16,9 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestController {
 
     @Autowired
-    DemoRepository demoRepository;
-
-    @Autowired
     TestService testService;
 
 

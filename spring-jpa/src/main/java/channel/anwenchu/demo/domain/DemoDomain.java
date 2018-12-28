@@ -3,6 +3,7 @@ package channel.anwenchu.demo.domain;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,13 +16,12 @@ import javax.persistence.Table;
  * Created by an_wch on 2018/5/3.
  */
 @Entity
-@Table(name = "AN")
 @Data
 @NoArgsConstructor
 public class DemoDomain{
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GenericGenerator(name="sid", strategy="assigned")
     private Long id;
 
     @Column
